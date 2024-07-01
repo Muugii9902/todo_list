@@ -1,17 +1,16 @@
-// DOM ELEMEMTS
 const taskTodoList = document.getElementById("taskTodoList");
 const taskProgressList = document.getElementById("taskProgressList");
 const taskDoneList = document.getElementById("taskDoneList");
 const taskBlockedList = document.getElementById("taskBlockedList");
 const addTaskBtn = document.getElementById("addTaskBtn");
-// const newtask =
+const saveBtn = document.getElementById("save-btn");
+const taskInput = document.getElementById("task-input");
+const taskStatus = document.getElementById("status");
+const trashBtn = document.getElementById("btn2");
+// const task = [];
 
 // VARIABLES FOR TASK
 const tasks = [
-  {
-    name: "Task One",
-    status: "TODO",
-  },
   {
     name: "Task Two",
     status: "INPROGRESS",
@@ -22,7 +21,7 @@ const tasks = [
   },
 ];
 
-function draw() {
+function zurah() {
   taskTodoList.innerHTML = "";
   taskProgressList.innerHTML = "";
   taskDoneList.innerHTML = "";
@@ -34,11 +33,11 @@ function draw() {
     <div class="d-flex justify-content-between align-items-center border border-1 rounded p-2">
     <span>${tasks[i].name}</span>
     <div>
-        <button class="btn">
+        <button id ="bnt1">
         <i class="bi bi-pencil"></i>
         </button>
-        <button class="btn">
-        <i class="bi bi-trash"></i>
+        <button id ="btn2">
+        <i class="bi bi-trash">${tasks[i].value}</i>
         </button>
     </div>
     </div>
@@ -68,17 +67,28 @@ function draw() {
   }
 }
 
-// addTaskBtn.addEventListener("click", function () {
-//   tasks[1].status = "DONE";
-//   draw();
-//   console.log("TASKS", tasks);
-// });
-
-// draw();
-addTaskBtn.addEventListener("click", function () {
-  const newtask = { name: "shine ", status: "TODO" };
-  tasks.push(newtask);
-  draw();
+saveBtn.addEventListener("click", function () {
+  const newTask = {
+    name: taskInput.value,
+    status: taskStatus.value,
+  };
+  tasks.push(newTask);
+  zurah();
   console.log("TASKS", tasks);
 });
-draw();
+
+zurah();
+// trashBtn.addEventListener("click", function () {
+//   let index = tasksArray.findIndex();
+// });
+trashBtn.addEventListener("click", function () {
+  const taskToRemove = taskInput.value;
+  const index = tasks.findIndex((task) => task.name === taskToRemove);
+  if (index > -1) {
+    tasks.splice(index, 1);
+    zurah();
+    console.log("TASKS", tasks);
+  } else {
+    console.log("Task not found");
+  }
+});
