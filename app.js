@@ -6,6 +6,11 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const saveBtn = document.getElementById("save-btn");
 const taskInput = document.getElementById("task-input");
 const taskStatus = document.getElementById("status");
+const countTodo = document.getElementById("countTodo");
+const countInprogress = document.getElementById("countInprogress");
+const countDone = document.getElementById("countDone");
+const countBlocked = document.getElementById("countBlocked");
+
 // const trashBtn = document.getElementById("btn2");
 // const task = [];
 
@@ -27,12 +32,15 @@ function zurah() {
   taskDoneList.innerHTML = "";
   taskBlockedList.innerHTML = "";
 
+  let count1 = 0;
+  let count2 = 0;
+  let count3 = 0;
+  let count4 = 0;
+
   for (let i = 0; i < tasks.length; i++) {
-    console.log("TASKS", tasks);
     let borderColor = "";
     switch (tasks[i].status) {
       case "TODO": {
-        borderColor = "";
         break;
       }
       case "INPROGRESS": {
@@ -71,18 +79,28 @@ function zurah() {
     switch (tasks[i].status) {
       case "TODO": {
         taskTodoList.innerHTML += newTaskCard;
+        count1 = count1 + 1;
+        countTodo.innerHTML = count1;
+
         break;
       }
       case "INPROGRESS": {
         taskProgressList.innerHTML += newTaskCard;
+        countInprogress.innerHTML = count2;
+        count2 = count2 + 1;
+        countInprogress.innerHTML = count2;
         break;
       }
       case "DONE": {
         taskDoneList.innerHTML += newTaskCard;
+        count3 = count3 + 1;
+        countDone.innerHTML = count3;
         break;
       }
       case "BLOCKED": {
         taskBlockedList.innerHTML += newTaskCard;
+        count4 = count4 + 1;
+        countBlocked.innerHTML = count4;
         break;
       }
       default: {
