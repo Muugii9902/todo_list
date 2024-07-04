@@ -15,6 +15,8 @@ const countBlocked = document.getElementById("countBlocked");
 // const task = [];
 
 // VARIABLES FOR TASK
+let isEdited = false;
+let editedIndex = -1;
 let tasks = [
   // {
   //   name: "Task Two",
@@ -25,6 +27,7 @@ let tasks = [
   //   status: "BLOCKED",
   // },
 ];
+console.log("task", tasks);
 
 function zurah() {
   taskTodoList.innerHTML = "";
@@ -80,27 +83,26 @@ function zurah() {
       case "TODO": {
         taskTodoList.innerHTML += newTaskCard;
         count1 = count1 + 1;
-        countTodo.innerHTML = count1;
 
         break;
       }
       case "INPROGRESS": {
         taskProgressList.innerHTML += newTaskCard;
-        countInprogress.innerHTML = count2;
+
         count2 = count2 + 1;
-        countInprogress.innerHTML = count2;
+
         break;
       }
       case "DONE": {
         taskDoneList.innerHTML += newTaskCard;
         count3 = count3 + 1;
-        countDone.innerHTML = count3;
+
         break;
       }
       case "BLOCKED": {
         taskBlockedList.innerHTML += newTaskCard;
         count4 = count4 + 1;
-        countBlocked.innerHTML = count4;
+
         break;
       }
       default: {
@@ -108,18 +110,51 @@ function zurah() {
       }
     }
   }
+  countInprogress.innerHTML = count2;
+  countDone.innerHTML = count3;
+  countBlocked.innerHTML = count4;
+  countTodo.innerHTML = count1;
 }
 saveBtn.addEventListener("click", function () {
-  const newTask = {
-    name: taskInput.value,
-    status: taskStatus.value,
-  };
-  tasks.push(newTask);
+  if (isEdited) {
+    tasks[editedIndex].name = taskInput.value;
+    tasks[editedIndex].status = taskStatus.value;
+    isEdited = false;
+  } else {
+    const newTask = {
+      name: taskInput.value,
+      status: taskStatus.value,
+    };
+    tasks.push(newTask);
+  }
+  taskInput.value = "";
+  taskStatus.value = "TODO";
   zurah();
-  console.log("TASKS", tasks);
 });
+const deleteTask = (taskIndex) => {
+  tasks.splice(taskIndex, 1);
+  zurah();
+};
 
-zurah();
+const taskEdit = (taskIndex) => {
+  console.log(taskIndex);
+  taskInput.value = tasks[taskIndex].name;
+  taskStatus.value = tasks[taskIndex].status;
+
+  isEdited = true;
+  editedIndex = taskIndex;
+};
+// saveBtn.addEventListener("click", function () {
+//   const newTask = {
+//     name: taskInput.value,
+//     status: taskStatus.value,
+//   };
+//   tasks.push(newTask);
+//   zurah();
+//   console.log("TASKS", tasks);
+// });
+
+// zurah();
 // trashBtn.addEventListener("click", function () {
 //   let index = tasksArray.findIndex();
 // });
@@ -134,15 +169,15 @@ zurah();
 //     console.log("Task not found");
 //   }
 // });
-const deleteTask = (taskIndex) => {
-  tasks.splice(taskIndex, 1);
-  zurah();
-  console.log("task delete", taskIndex);
-};
+// const deleteTask = (taskIndex) => {
+//   tasks.splice(taskIndex, 1);
+//   zurah();
+//   console.log("task delete", taskIndex);
+// };
 // const editTask = (taskIndex) => {};
-const moveTask = (taskIndex) => {
-  taskInput.value = tasks[taskIndex].name;
-  taskStatus.value = tasks[taskIndex].status;
-  tasks.splice(taskIndex, 1);
-  zurah();
-};
+// const moveTask = (taskIndex) => {
+//   taskInput.value = tasks[taskIndex].name;
+//   taskStatus.value = tasks[taskIndex].status;
+//   tasks.splice(taskIndex, 1);
+//   zurah();
+// };
